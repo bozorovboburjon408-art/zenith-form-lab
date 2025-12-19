@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Zap, ArrowRight, Sparkles } from "lucide-react";
+import { Eye, EyeOff, Zap, ArrowRight, Shield, BarChart3, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -83,165 +83,186 @@ const Auth = () => {
     }
   };
 
+  const features = [
+    { icon: BarChart3, label: "Analitika" },
+    { icon: Shield, label: "Xavfsizlik" },
+    { icon: Users, label: "Jamoa" },
+  ];
+
   return (
-    <div className="min-h-screen flex">
-      {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-primary via-primary/90 to-accent overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-20 w-40 h-40 bg-white/10 rounded-full blur-2xl animate-pulse-slow" />
-          <div className="absolute bottom-40 right-20 w-60 h-60 bg-white/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-accent/30 rounded-full blur-2xl animate-float" />
-          
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-10" style={{
-            backgroundImage: 'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)',
-            backgroundSize: '50px 50px'
-          }} />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col justify-center px-16 text-white">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <Zap className="w-8 h-8" />
-            </div>
-            <span className="text-3xl font-bold">AdminPro</span>
-          </div>
-          
-          <h1 className="text-5xl font-bold leading-tight mb-6">
-            Biznesingizni<br />
-            <span className="text-white/80">yangi darajaga</span><br />
-            olib chiqing
-          </h1>
-          
-          <p className="text-lg text-white/70 max-w-md mb-8">
-            Zamonaviy boshqaruv tizimi bilan kompaniyangizni rivojlantiring va samaradorlikni oshiring.
-          </p>
-
-          {/* Features */}
-          <div className="space-y-4">
-            {["Real-vaqt analitika", "Xavfsiz ma'lumotlar", "24/7 Qo'llab-quvvatlash"].map((feature, i) => (
-              <div key={i} className="flex items-center gap-3 text-white/90">
-                <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-                  <Sparkles className="w-3 h-3" />
-                </div>
-                {feature}
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden p-4">
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Main gradient orbs */}
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/5 to-accent/5 rounded-full blur-3xl" />
+        
+        {/* Floating geometric shapes */}
+        <div className="absolute top-20 right-1/4 w-4 h-4 bg-primary/40 rotate-45 animate-float" style={{ animationDelay: '0.5s' }} />
+        <div className="absolute bottom-32 left-1/4 w-6 h-6 bg-accent/40 rounded-full animate-float" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/3 left-20 w-3 h-3 bg-primary/30 rotate-45 animate-float" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute bottom-1/4 right-32 w-5 h-5 border-2 border-accent/30 rotate-12 animate-float" style={{ animationDelay: '0.8s' }} />
+        
+        {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }} />
       </div>
 
-      {/* Right Side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background relative">
-        {/* Mobile logo */}
-        <div className="absolute top-8 left-8 lg:hidden flex items-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-            <Zap className="w-5 h-5 text-primary-foreground" />
+      {/* Main card */}
+      <div className="relative z-10 w-full max-w-md animate-slide-up">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent mb-4 shadow-lg shadow-primary/30">
+            <Zap className="w-8 h-8 text-primary-foreground" />
           </div>
-          <span className="text-xl font-bold text-foreground">AdminPro</span>
+          <h1 className="text-2xl font-bold text-foreground">AdminPro</h1>
         </div>
 
-        <div className="w-full max-w-md animate-fade-in">
-          <div className="mb-10">
-            <h2 className="text-3xl font-bold text-foreground mb-2">
-              {isLogin ? "Xush kelibsiz!" : "Hisob yaratish"}
-            </h2>
-            <p className="text-muted-foreground">
-              {isLogin ? "Davom etish uchun hisobingizga kiring" : "Yangi hisob yaratish uchun ma'lumotlarni kiriting"}
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium text-foreground">Email manzil</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="sizning@email.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="h-14 px-4 bg-muted/30 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-base"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium text-foreground">Parol</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="h-14 px-4 pr-14 bg-muted/30 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-base"
-                  required
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-lg hover:bg-muted/50"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5 text-muted-foreground" /> : <Eye className="w-5 h-5 text-muted-foreground" />}
-                </Button>
-              </div>
-            </div>
-
-            {!isLogin && (
-              <div className="space-y-2 animate-fade-in">
-                <Label htmlFor="confirm" className="text-sm font-medium text-foreground">Parolni tasdiqlash</Label>
-                <Input
-                  id="confirm"
-                  type="password"
-                  placeholder="••••••••"
-                  value={formData.confirmPassword}
-                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="h-14 px-4 bg-muted/30 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-base"
-                  required
-                />
-              </div>
-            )}
-
-            <Button 
-              type="submit" 
-              className="w-full h-14 text-base font-semibold rounded-xl bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all shadow-lg shadow-primary/20 group" 
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                  Yuklanmoqda...
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  {isLogin ? "Kirish" : "Ro'yxatdan o'tish"}
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </span>
-              )}
-            </Button>
-          </form>
-
-          <div className="mt-8 text-center">
-            <p className="text-muted-foreground">
-              {isLogin ? "Hisobingiz yo'qmi?" : "Allaqachon hisobingiz bormi?"}{" "}
+        {/* Card */}
+        <div className="relative">
+          {/* Glow effect behind card */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-3xl blur-xl opacity-60" />
+          
+          <div className="relative bg-card/95 backdrop-blur-xl rounded-2xl border border-border/50 p-8 shadow-2xl">
+            {/* Tabs */}
+            <div className="flex gap-1 p-1 bg-muted/50 rounded-xl mb-8">
               <button
                 type="button"
-                onClick={() => setIsLogin(!isLogin)}
-                className="text-primary font-semibold hover:underline transition-all"
+                onClick={() => setIsLogin(true)}
+                className={`flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  isLogin 
+                    ? 'bg-card text-foreground shadow-md' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
-                {isLogin ? "Ro'yxatdan o'ting" : "Kirish"}
+                Kirish
               </button>
-            </p>
-          </div>
+              <button
+                type="button"
+                onClick={() => setIsLogin(false)}
+                className={`flex-1 py-3 px-4 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  !isLogin 
+                    ? 'bg-card text-foreground shadow-md' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Ro'yxatdan o'tish
+              </button>
+            </div>
 
-          <p className="text-center text-xs text-muted-foreground mt-12">
-            Davom etish orqali siz bizning <span className="text-primary cursor-pointer hover:underline">Foydalanish shartlari</span> va <span className="text-primary cursor-pointer hover:underline">Maxfiylik siyosati</span>ga rozilik bildirasiz.
-          </p>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                  Email manzil
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="sizning@email.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="h-12 bg-muted/30 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/50"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm font-medium text-foreground">
+                  Parol
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    className="h-12 pr-12 bg-muted/30 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/50"
+                    required
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </Button>
+                </div>
+              </div>
+
+              {!isLogin && (
+                <div className="space-y-2 animate-fade-in">
+                  <Label htmlFor="confirm" className="text-sm font-medium text-foreground">
+                    Parolni tasdiqlash
+                  </Label>
+                  <Input
+                    id="confirm"
+                    type="password"
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                    className="h-12 bg-muted/30 border-border/50 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/50"
+                    required
+                  />
+                </div>
+              )}
+
+              <Button 
+                type="submit" 
+                className="w-full h-12 text-sm font-semibold rounded-xl bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all shadow-lg shadow-primary/25 group mt-2" 
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                    Yuklanmoqda...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    {isLogin ? "Kirish" : "Ro'yxatdan o'tish"}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                )}
+              </Button>
+            </form>
+
+            {/* Divider */}
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border/50" />
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-card px-3 text-muted-foreground">Afzalliklar</span>
+              </div>
+            </div>
+
+            {/* Features */}
+            <div className="flex justify-center gap-6">
+              {features.map((feature, i) => (
+                <div key={i} className="flex flex-col items-center gap-2 text-muted-foreground">
+                  <div className="w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center">
+                    <feature.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-xs">{feature.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* Footer */}
+        <p className="text-center text-xs text-muted-foreground mt-6">
+          Davom etish orqali{" "}
+          <span className="text-primary cursor-pointer hover:underline">Shartlar</span>
+          {" "}va{" "}
+          <span className="text-primary cursor-pointer hover:underline">Maxfiylik</span>
+          {" "}ga rozilik bildirasiz.
+        </p>
       </div>
     </div>
   );
