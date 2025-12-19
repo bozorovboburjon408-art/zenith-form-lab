@@ -1,0 +1,86 @@
+import { Search, Bell, Moon, Sun, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+
+export const Header = () => {
+  return (
+    <header className="h-16 border-b border-border bg-card/50 backdrop-blur-xl flex items-center justify-between px-6 sticky top-0 z-40">
+      {/* Search */}
+      <div className="relative w-80">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Input
+          placeholder="Qidirish..."
+          className="pl-10 bg-secondary/50 border-border focus:border-primary input-glow"
+        />
+      </div>
+
+      {/* Right Actions */}
+      <div className="flex items-center gap-4">
+        {/* Notifications */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="w-5 h-5" />
+              <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-destructive">
+                3
+              </Badge>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-80">
+            <DropdownMenuLabel>Bildirishnomalar</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
+              <span className="font-medium">Yangi buyurtma keldi</span>
+              <span className="text-sm text-muted-foreground">5 daqiqa oldin</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
+              <span className="font-medium">Yangi foydalanuvchi ro'yxatdan o'tdi</span>
+              <span className="text-sm text-muted-foreground">15 daqiqa oldin</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
+              <span className="font-medium">Hisobot tayyor</span>
+              <span className="text-sm text-muted-foreground">1 soat oldin</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* User Menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="gap-3 px-2">
+              <Avatar className="w-8 h-8">
+                <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" />
+                <AvatarFallback>AD</AvatarFallback>
+              </Avatar>
+              <div className="text-left hidden md:block">
+                <p className="text-sm font-medium">Admin User</p>
+                <p className="text-xs text-muted-foreground">admin@example.com</p>
+              </div>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>Mening hisobim</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <User className="w-4 h-4 mr-2" />
+              Profil
+            </DropdownMenuItem>
+            <DropdownMenuItem>Sozlamalar</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-destructive">Chiqish</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </header>
+  );
+};
