@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -15,27 +16,26 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface SidebarProps {
-  activeItem: string;
-  onItemClick: (item: string) => void;
-}
-
 const menuItems = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "users", label: "Foydalanuvchilar", icon: Users },
-  { id: "orders", label: "Buyurtmalar", icon: ShoppingCart },
-  { id: "analytics", label: "Analitika", icon: BarChart3 },
-  { id: "documents", label: "Hujjatlar", icon: FileText },
-  { id: "notifications", label: "Bildirishnomalar", icon: Bell },
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
+  { id: "users", label: "Foydalanuvchilar", icon: Users, path: "/users" },
+  { id: "orders", label: "Buyurtmalar", icon: ShoppingCart, path: "/orders" },
+  { id: "analytics", label: "Analitika", icon: BarChart3, path: "/analytics" },
+  { id: "documents", label: "Hujjatlar", icon: FileText, path: "/documents" },
+  { id: "notifications", label: "Bildirishnomalar", icon: Bell, path: "/notifications" },
 ];
 
 const bottomItems = [
-  { id: "settings", label: "Sozlamalar", icon: Settings },
-  { id: "help", label: "Yordam", icon: HelpCircle },
+  { id: "settings", label: "Sozlamalar", icon: Settings, path: "/settings" },
+  { id: "help", label: "Yordam", icon: HelpCircle, path: "/help" },
 ];
 
-export const Sidebar = ({ activeItem, onItemClick }: SidebarProps) => {
+export const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <aside
@@ -59,10 +59,10 @@ export const Sidebar = ({ activeItem, onItemClick }: SidebarProps) => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => onItemClick(item.id)}
+            onClick={() => navigate(item.path)}
             className={cn(
               "w-full sidebar-item",
-              activeItem === item.id && "sidebar-item-active"
+              isActive(item.path) && "sidebar-item-active"
             )}
           >
             <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -76,10 +76,10 @@ export const Sidebar = ({ activeItem, onItemClick }: SidebarProps) => {
         {bottomItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => onItemClick(item.id)}
+            onClick={() => navigate(item.path)}
             className={cn(
               "w-full sidebar-item",
-              activeItem === item.id && "sidebar-item-active"
+              isActive(item.path) && "sidebar-item-active"
             )}
           >
             <item.icon className="w-5 h-5 flex-shrink-0" />
