@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { StatsCards } from "@/components/dashboard/StatsCards";
@@ -10,11 +9,10 @@ import { FormSection } from "@/components/dashboard/FormSection";
 import { TopProducts } from "@/components/dashboard/TopProducts";
 
 const Index = () => {
-  const [activeItem, setActiveItem] = useState("dashboard");
 
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar activeItem={activeItem} onItemClick={setActiveItem} />
+      <Sidebar />
       
       <div className="ml-64 transition-all duration-300">
         <Header />
