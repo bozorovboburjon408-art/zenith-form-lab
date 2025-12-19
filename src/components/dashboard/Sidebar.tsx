@@ -144,42 +144,38 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
 
         {/* Main Menu */}
         <nav className="flex-1 py-2 px-3 space-y-1.5 overflow-y-auto">
-          {menuItems.map((item, index) => {
+          {menuItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path);
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavigation(item.path)}
-                style={{ 
-                  animationDelay: `${index * 50}ms`,
-                  fontFamily: 'Plus Jakarta Sans, sans-serif'
-                }}
+                style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
                 className={cn(
-                  "w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl transition-all duration-300 group relative animate-fade-in",
-                  "hover:scale-[1.01] active:scale-[0.99]",
+                  "w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl transition-colors duration-200 group relative",
                   active
                     ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25"
-                    : "text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-muted/60 hover:to-muted/30"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
                 <div
                   className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-200",
                     active
-                      ? "bg-primary-foreground/20 shadow-inner"
-                      : "bg-gradient-to-br from-muted/80 to-muted/40 group-hover:from-primary/20 group-hover:to-accent/10 group-hover:scale-110"
+                      ? "bg-primary-foreground/20"
+                      : "bg-muted/50 group-hover:bg-primary/20"
                   )}
                 >
                   <Icon className={cn(
-                    "w-5 h-5 transition-all duration-300",
+                    "w-5 h-5",
                     !active && "group-hover:text-primary"
                   )} />
                 </div>
                 {(!collapsed || isMobileOpen) && (
                   <span className={cn(
-                    "font-semibold text-[13px] tracking-wide transition-all duration-300 flex-1 text-left",
-                    active ? "text-primary-foreground" : "group-hover:translate-x-0.5"
+                    "font-semibold text-[13px] tracking-wide flex-1 text-left",
+                    active && "text-primary-foreground"
                   )}>
                     {item.label}
                   </span>
@@ -187,9 +183,9 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
                 {item.badge && (
                   <span
                     className={cn(
-                      "min-w-6 h-6 px-2 rounded-full text-[11px] font-bold flex items-center justify-center transition-all duration-300 shadow-sm",
+                      "min-w-6 h-6 px-2 rounded-full text-[11px] font-bold flex items-center justify-center",
                       active
-                        ? "bg-primary-foreground/25 text-primary-foreground backdrop-blur-sm"
+                        ? "bg-primary-foreground/25 text-primary-foreground"
                         : "bg-gradient-to-r from-primary to-accent text-primary-foreground",
                       collapsed && !isMobileOpen && "absolute -top-1 -right-1 min-w-5 h-5 text-[10px] px-1.5"
                     )}
@@ -198,7 +194,7 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
                   </span>
                 )}
                 {active && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-foreground rounded-r-full shadow-glow" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-foreground rounded-r-full" />
                 )}
               </button>
             );
@@ -226,30 +222,29 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
                 onClick={() => handleNavigation(item.path)}
                 style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
                 className={cn(
-                  "w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl transition-all duration-300 group",
-                  "hover:scale-[1.01] active:scale-[0.99]",
+                  "w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl transition-colors duration-200 group",
                   active
                     ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25"
-                    : "text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-muted/60 hover:to-muted/30"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
                 <div
                   className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-200",
                     active
-                      ? "bg-primary-foreground/20 shadow-inner"
-                      : "bg-gradient-to-br from-muted/80 to-muted/40 group-hover:from-primary/20 group-hover:to-accent/10 group-hover:scale-110"
+                      ? "bg-primary-foreground/20"
+                      : "bg-muted/50 group-hover:bg-primary/20"
                   )}
                 >
                   <Icon className={cn(
-                    "w-5 h-5 transition-all duration-300",
+                    "w-5 h-5",
                     !active && "group-hover:text-primary"
                   )} />
                 </div>
                 {(!collapsed || isMobileOpen) && (
                   <span className={cn(
-                    "font-semibold text-[13px] tracking-wide transition-all duration-300",
-                    active ? "text-primary-foreground" : "group-hover:translate-x-0.5"
+                    "font-semibold text-[13px] tracking-wide",
+                    active && "text-primary-foreground"
                   )}>
                     {item.label}
                   </span>
