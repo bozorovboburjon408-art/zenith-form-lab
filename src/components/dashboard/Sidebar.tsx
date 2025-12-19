@@ -15,6 +15,8 @@ import {
   Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "@/hooks/use-toast";
 
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
@@ -34,8 +36,18 @@ export const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { signOut } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: "Chiqildi",
+      description: "Hisobdan muvaffaqiyatli chiqdingiz",
+    });
+    navigate("/auth");
+  };
 
   return (
     <aside
@@ -87,7 +99,10 @@ export const Sidebar = () => {
           </button>
         ))}
         
-        <button className="w-full sidebar-item text-destructive hover:bg-destructive/10">
+        <button 
+          onClick={handleSignOut}
+          className="w-full sidebar-item text-destructive hover:bg-destructive/10"
+        >
           <LogOut className="w-5 h-5 flex-shrink-0" />
           {!collapsed && <span>Chiqish</span>}
         </button>
