@@ -31,12 +31,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const menuItems = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
-  { id: "users", label: "Foydalanuvchilar", icon: Users, path: "/users" },
-  { id: "orders", label: "Buyurtmalar", icon: ShoppingCart, path: "/orders" },
-  { id: "analytics", label: "Analitika", icon: BarChart3, path: "/analytics" },
-  { id: "documents", label: "Hujjatlar", icon: FileText, path: "/documents" },
-  { id: "notifications", label: "Bildirishnomalar", icon: Bell, path: "/notifications" },
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/", badge: null },
+  { id: "users", label: "Foydalanuvchilar", icon: Users, path: "/users", badge: null },
+  { id: "orders", label: "Buyurtmalar", icon: ShoppingCart, path: "/orders", badge: 12 },
+  { id: "analytics", label: "Analitika", icon: BarChart3, path: "/analytics", badge: null },
+  { id: "documents", label: "Hujjatlar", icon: FileText, path: "/documents", badge: null },
+  { id: "notifications", label: "Bildirishnomalar", icon: Bell, path: "/notifications", badge: 3 },
 ];
 
 const bottomItems = [
@@ -165,7 +165,20 @@ export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
                   <Icon className="w-[18px] h-[18px] transition-transform duration-300" />
                 </div>
                 {(!collapsed || isMobileOpen) && (
-                  <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5">{item.label}</span>
+                  <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5 flex-1">{item.label}</span>
+                )}
+                {item.badge && (
+                  <span
+                    className={cn(
+                      "min-w-5 h-5 px-1.5 rounded-full text-xs font-semibold flex items-center justify-center transition-all duration-300",
+                      active
+                        ? "bg-primary-foreground/30 text-primary-foreground"
+                        : "bg-primary text-primary-foreground",
+                      collapsed && !isMobileOpen && "absolute -top-1 -right-1 min-w-4 h-4 text-[10px] px-1"
+                    )}
+                  >
+                    {item.badge > 99 ? "99+" : item.badge}
+                  </span>
                 )}
                 {active && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-foreground rounded-r-full animate-pulse" />
