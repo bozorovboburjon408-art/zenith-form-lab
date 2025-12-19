@@ -134,27 +134,28 @@ export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
                 key={item.id}
                 onClick={() => handleNavigation(item.path)}
                 className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
+                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group relative",
+                  "hover:scale-[1.02] hover:translate-x-1 active:scale-[0.98]",
                   active
                     ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:shadow-sm"
                 )}
               >
                 <div
                   className={cn(
-                    "w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200",
+                    "w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300",
                     active
                       ? "bg-primary-foreground/20"
-                      : "bg-muted/50 group-hover:bg-muted"
+                      : "bg-muted/50 group-hover:bg-primary/20 group-hover:text-primary group-hover:scale-110 group-hover:rotate-3"
                   )}
                 >
-                  <Icon className="w-[18px] h-[18px]" />
+                  <Icon className="w-[18px] h-[18px] transition-transform duration-300" />
                 </div>
                 {(!collapsed || isMobileOpen) && (
-                  <span className="font-medium text-sm">{item.label}</span>
+                  <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5">{item.label}</span>
                 )}
                 {active && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-foreground rounded-r-full" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-foreground rounded-r-full animate-pulse" />
                 )}
               </button>
             );
@@ -181,24 +182,25 @@ export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
                 key={item.id}
                 onClick={() => handleNavigation(item.path)}
                 className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group",
+                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group",
+                  "hover:scale-[1.02] hover:translate-x-1 active:scale-[0.98]",
                   active
                     ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:shadow-sm"
                 )}
               >
                 <div
                   className={cn(
-                    "w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200",
+                    "w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300",
                     active
                       ? "bg-primary-foreground/20"
-                      : "bg-muted/50 group-hover:bg-muted"
+                      : "bg-muted/50 group-hover:bg-primary/20 group-hover:text-primary group-hover:scale-110 group-hover:rotate-3"
                   )}
                 >
-                  <Icon className="w-[18px] h-[18px]" />
+                  <Icon className="w-[18px] h-[18px] transition-transform duration-300" />
                 </div>
                 {(!collapsed || isMobileOpen) && (
-                  <span className="font-medium text-sm">{item.label}</span>
+                  <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5">{item.label}</span>
                 )}
               </button>
             );
@@ -207,13 +209,13 @@ export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
           {/* Logout Button */}
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group text-destructive hover:bg-destructive/10"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group text-destructive hover:bg-destructive/10 hover:scale-[1.02] hover:translate-x-1 active:scale-[0.98]"
           >
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-destructive/10 group-hover:bg-destructive/20 transition-all duration-200">
-              <LogOut className="w-[18px] h-[18px]" />
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-destructive/10 group-hover:bg-destructive/20 group-hover:scale-110 group-hover:-rotate-12 transition-all duration-300">
+              <LogOut className="w-[18px] h-[18px] transition-transform duration-300" />
             </div>
             {(!collapsed || isMobileOpen) && (
-              <span className="font-medium text-sm">Chiqish</span>
+              <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5">Chiqish</span>
             )}
           </button>
         </div>
