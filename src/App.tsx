@@ -14,6 +14,7 @@ import NewOrder from "./pages/NewOrder";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Documents from "./pages/Documents";
+import Notifications from "./pages/Notifications";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -90,6 +91,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <Documents />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/notifications"
+                element={
+                  <ProtectedRoute>
+                    <Notifications />
                   </ProtectedRoute>
                 }
               />
