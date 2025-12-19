@@ -102,7 +102,7 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
                 <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="text-left hidden md:block">
-                <p className="text-sm font-medium">{userEmail.split("@")[0]}</p>
+                <p className="text-sm font-medium text-foreground">{userEmail.split("@")[0]}</p>
                 <p className="text-xs text-muted-foreground">{userEmail}</p>
               </div>
             </Button>
