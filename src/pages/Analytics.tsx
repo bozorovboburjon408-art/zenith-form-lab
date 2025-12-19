@@ -27,8 +27,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { cn } from "@/lib/utils";
 
 // Revenue data
@@ -131,20 +130,14 @@ const statsCards = [
 
 const Analytics = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-
-      <div className="ml-64 transition-all duration-300">
-        <Header />
-
-        <main className="p-6 space-y-6">
-          {/* Page Title */}
-          <div className="animate-fade-in">
-            <h1 className="text-3xl font-bold text-gradient">Analitika</h1>
-            <p className="text-muted-foreground mt-1">
-              Biznesingiz ko'rsatkichlarini kuzating va tahlil qiling
-            </p>
-          </div>
+    <DashboardLayout>
+      {/* Page Title */}
+      <div className="animate-fade-in">
+        <h1 className="text-2xl md:text-3xl font-bold text-gradient">Analitika</h1>
+        <p className="text-muted-foreground mt-1">
+          Biznesingiz ko'rsatkichlarini kuzating va tahlil qiling
+        </p>
+      </div>
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -447,9 +440,7 @@ const Analytics = () => {
               </div>
             </CardContent>
           </Card>
-        </main>
-      </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

@@ -30,8 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { toast } from "@/hooks/use-toast";
 
 const Settings = () => {
@@ -107,20 +106,14 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-
-      <div className="ml-64 transition-all duration-300">
-        <Header />
-
-        <main className="p-6 space-y-6">
-          {/* Page Title */}
-          <div className="animate-fade-in">
-            <h1 className="text-3xl font-bold text-gradient">Sozlamalar</h1>
-            <p className="text-muted-foreground mt-1">
-              Hisobingiz va tizim sozlamalarini boshqaring
-            </p>
-          </div>
+    <DashboardLayout>
+      {/* Page Title */}
+      <div className="animate-fade-in">
+        <h1 className="text-2xl md:text-3xl font-bold text-gradient">Sozlamalar</h1>
+        <p className="text-muted-foreground mt-1">
+          Hisobingiz va tizim sozlamalarini boshqaring
+        </p>
+      </div>
 
           {/* Settings Tabs */}
           <Tabs defaultValue="profile" className="space-y-6">
@@ -573,9 +566,7 @@ const Settings = () => {
               </div>
             </TabsContent>
           </Tabs>
-        </main>
-      </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

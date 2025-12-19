@@ -20,8 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 export interface Order {
   id: string;
@@ -157,26 +156,20 @@ const Orders = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-
-      <div className="ml-64 transition-all duration-300">
-        <Header />
-
-        <main className="p-6 space-y-6">
-          {/* Page Title */}
-          <div className="flex items-center justify-between animate-fade-in">
-            <div>
-              <h1 className="text-3xl font-bold text-gradient">Buyurtmalar</h1>
-              <p className="text-muted-foreground mt-1">
-                Barcha buyurtmalarni boshqaring va kuzating
-              </p>
-            </div>
-            <Button onClick={() => navigate("/orders/new")} className="gap-2">
-              <Plus className="w-4 h-4" />
-              Yangi buyurtma
-            </Button>
-          </div>
+    <DashboardLayout>
+      {/* Page Title */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gradient">Buyurtmalar</h1>
+          <p className="text-muted-foreground mt-1">
+            Barcha buyurtmalarni boshqaring va kuzating
+          </p>
+        </div>
+        <Button onClick={() => navigate("/orders/new")} className="gap-2 w-full sm:w-auto">
+          <Plus className="w-4 h-4" />
+          Yangi buyurtma
+        </Button>
+      </div>
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -316,9 +309,7 @@ const Orders = () => {
               )}
             </CardContent>
           </Card>
-        </main>
-      </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

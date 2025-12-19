@@ -14,8 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { toast } from "@/hooks/use-toast";
 
 interface ProductItem {
@@ -110,23 +109,17 @@ const NewOrder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-
-      <div className="ml-64 transition-all duration-300">
-        <Header />
-
-        <main className="p-6 space-y-6">
-          {/* Back Button & Title */}
-          <div className="flex items-center gap-4 animate-fade-in">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/orders")}>
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div>
-              <h1 className="text-3xl font-bold text-gradient">Yangi buyurtma</h1>
-              <p className="text-muted-foreground mt-1">Yangi buyurtma yarating</p>
-            </div>
-          </div>
+    <DashboardLayout>
+      {/* Back Button & Title */}
+      <div className="flex items-center gap-4 animate-fade-in">
+        <Button variant="ghost" size="icon" onClick={() => navigate("/orders")}>
+          <ArrowLeft className="w-5 h-5" />
+        </Button>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gradient">Yangi buyurtma</h1>
+          <p className="text-muted-foreground mt-1">Yangi buyurtma yarating</p>
+        </div>
+      </div>
 
           <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Customer Info */}
@@ -322,9 +315,7 @@ const NewOrder = () => {
               </Card>
             </div>
           </form>
-        </main>
-      </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
