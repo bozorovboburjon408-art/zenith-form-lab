@@ -47,7 +47,7 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
           className="lg:hidden"
           onClick={onMenuClick}
         >
-          <Menu className="w-5 h-5" />
+          <Menu className="w-5 h-5 text-foreground" />
         </Button>
 
         {/* Search - Hidden on mobile */}
@@ -69,7 +69,7 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5" />
+              <Bell className="w-5 h-5 text-foreground" />
               <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-destructive">
                 3
               </Badge>
@@ -111,11 +111,11 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
             <DropdownMenuLabel>Mening hisobim</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate("/settings")}>
-              <User className="w-4 h-4 mr-2" />
+              <User className="w-4 h-4 mr-2 text-foreground" />
               Profil
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/settings")}>
-              <Settings className="w-4 h-4 mr-2" />
+              <Settings className="w-4 h-4 mr-2 text-foreground" />
               Sozlamalar
             </DropdownMenuItem>
             <DropdownMenuSeparator />
