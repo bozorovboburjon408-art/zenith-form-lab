@@ -14,12 +14,21 @@ import {
   ChevronRight,
   Sparkles,
   X,
+  MoreVertical,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
@@ -44,7 +53,11 @@ export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
+
+  const userEmail = user?.email || "admin@example.com";
+  const userName = userEmail.split("@")[0];
+  const userInitials = userName.slice(0, 2).toUpperCase();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -206,18 +219,58 @@ export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
             );
           })}
 
-          {/* Logout Button */}
-          <button
-            onClick={handleSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group text-destructive hover:bg-destructive/10 hover:scale-[1.02] hover:translate-x-1 active:scale-[0.98]"
-          >
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-destructive/10 group-hover:bg-destructive/20 group-hover:scale-110 group-hover:-rotate-12 transition-all duration-300">
-              <LogOut className="w-[18px] h-[18px] transition-transform duration-300" />
-            </div>
-            {(!collapsed || isMobileOpen) && (
-              <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5">Chiqish</span>
+        </div>
+
+        {/* User Profile Card */}
+        <div className="p-3 border-t border-border/50">
+          <div
+            className={cn(
+              "flex items-center gap-3 p-2 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all duration-300 group cursor-pointer",
+              collapsed && !isMobileOpen && "justify-center"
             )}
-          </button>
+          >
+            <div className="relative">
+              <Avatar className="w-10 h-10 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300">
+                <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userEmail}`} />
+                <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">
+                  {userInitials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success rounded-full border-2 border-card" />
+            </div>
+            
+            {(!collapsed || isMobileOpen) && (
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-foreground truncate capitalize">{userName}</p>
+                <p className="text-xs text-muted-foreground truncate">{userEmail}</p>
+              </div>
+            )}
+
+            {(!collapsed || isMobileOpen) && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  >
+                    <MoreVertical className="w-4 h-4 text-muted-foreground" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" side="top" className="w-48 bg-popover">
+                  <DropdownMenuItem onClick={() => handleNavigation("/settings")}>
+                    <Settings className="w-4 h-4 mr-2 text-foreground" />
+                    <span>Sozlamalar</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    <span>Chiqish</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         </div>
 
         {/* Collapse Button - Desktop Only */}
