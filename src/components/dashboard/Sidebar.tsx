@@ -31,17 +31,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const menuItems = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/", badge: null },
+  { id: "dashboard", label: "Bosh sahifa", icon: LayoutDashboard, path: "/", badge: null },
   { id: "users", label: "Foydalanuvchilar", icon: Users, path: "/users", badge: null },
   { id: "orders", label: "Buyurtmalar", icon: ShoppingCart, path: "/orders", badge: 12 },
-  { id: "analytics", label: "Analitika", icon: BarChart3, path: "/analytics", badge: null },
+  { id: "analytics", label: "Statistika", icon: BarChart3, path: "/analytics", badge: null },
   { id: "documents", label: "Hujjatlar", icon: FileText, path: "/documents", badge: null },
-  { id: "notifications", label: "Bildirishnomalar", icon: Bell, path: "/notifications", badge: 3 },
+  { id: "notifications", label: "Xabarlar", icon: Bell, path: "/notifications", badge: 3 },
 ];
 
 const bottomItems = [
   { id: "settings", label: "Sozlamalar", icon: Settings, path: "/settings" },
-  { id: "help", label: "Yordam", icon: HelpCircle, path: "/help" },
+  { id: "help", label: "Yordam markazi", icon: HelpCircle, path: "/help" },
 ];
 
 interface SidebarProps {
@@ -113,76 +113,92 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
 
         {/* Logo */}
         <div className="p-5 flex items-center gap-3">
-          <div className="relative">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center shadow-lg shadow-primary/25">
-              <Sparkles className="w-5 h-5 text-primary-foreground" />
+          <div className="relative group/logo">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 transition-transform duration-300 group-hover/logo:scale-105 group-hover/logo:rotate-3">
+              <Sparkles className="w-6 h-6 text-primary-foreground" />
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success rounded-full border-2 border-card" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-success rounded-full border-2 border-card animate-pulse" />
           </div>
           {(!collapsed || isMobileOpen) && (
             <div className="flex flex-col">
-              <span className="font-bold text-lg text-foreground tracking-tight">AdminPro</span>
-              <span className="text-xs text-muted-foreground">Boshqaruv paneli</span>
+              <span className="font-bold text-xl text-foreground tracking-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                AdminPro
+              </span>
+              <span className="text-[11px] text-muted-foreground font-medium tracking-wide">
+                Boshqaruv tizimi
+              </span>
             </div>
           )}
         </div>
 
-        <Separator className="mx-4 w-auto bg-border/50" />
+        <Separator className="mx-4 w-auto bg-border/40" />
 
         {/* Menu Label */}
         {(!collapsed || isMobileOpen) && (
-          <div className="px-5 pt-5 pb-2">
-            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              Asosiy
+          <div className="px-5 pt-5 pb-3">
+            <span className="text-[10px] font-bold text-primary/70 uppercase tracking-[0.2em]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+              Navigatsiya
             </span>
           </div>
         )}
 
         {/* Main Menu */}
-        <nav className="flex-1 py-2 px-3 space-y-1 overflow-y-auto">
-          {menuItems.map((item) => {
+        <nav className="flex-1 py-2 px-3 space-y-1.5 overflow-y-auto">
+          {menuItems.map((item, index) => {
             const Icon = item.icon;
             const active = isActive(item.path);
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavigation(item.path)}
+                style={{ 
+                  animationDelay: `${index * 50}ms`,
+                  fontFamily: 'Plus Jakarta Sans, sans-serif'
+                }}
                 className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group relative",
-                  "hover:scale-[1.02] hover:translate-x-1 active:scale-[0.98]",
+                  "w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl transition-all duration-300 group relative animate-fade-in",
+                  "hover:scale-[1.01] active:scale-[0.99]",
                   active
-                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:shadow-sm"
+                    ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25"
+                    : "text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-muted/60 hover:to-muted/30"
                 )}
               >
                 <div
                   className={cn(
-                    "w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300",
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
                     active
-                      ? "bg-primary-foreground/20"
-                      : "bg-muted/50 group-hover:bg-primary/20 group-hover:text-primary group-hover:scale-110 group-hover:rotate-3"
+                      ? "bg-primary-foreground/20 shadow-inner"
+                      : "bg-gradient-to-br from-muted/80 to-muted/40 group-hover:from-primary/20 group-hover:to-accent/10 group-hover:scale-110"
                   )}
                 >
-                  <Icon className="w-[18px] h-[18px] transition-transform duration-300" />
+                  <Icon className={cn(
+                    "w-5 h-5 transition-all duration-300",
+                    !active && "group-hover:text-primary"
+                  )} />
                 </div>
                 {(!collapsed || isMobileOpen) && (
-                  <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5 flex-1">{item.label}</span>
+                  <span className={cn(
+                    "font-semibold text-[13px] tracking-wide transition-all duration-300 flex-1 text-left",
+                    active ? "text-primary-foreground" : "group-hover:translate-x-0.5"
+                  )}>
+                    {item.label}
+                  </span>
                 )}
                 {item.badge && (
                   <span
                     className={cn(
-                      "min-w-5 h-5 px-1.5 rounded-full text-xs font-semibold flex items-center justify-center transition-all duration-300",
+                      "min-w-6 h-6 px-2 rounded-full text-[11px] font-bold flex items-center justify-center transition-all duration-300 shadow-sm",
                       active
-                        ? "bg-primary-foreground/30 text-primary-foreground"
-                        : "bg-primary text-primary-foreground",
-                      collapsed && !isMobileOpen && "absolute -top-1 -right-1 min-w-4 h-4 text-[10px] px-1"
+                        ? "bg-primary-foreground/25 text-primary-foreground backdrop-blur-sm"
+                        : "bg-gradient-to-r from-primary to-accent text-primary-foreground",
+                      collapsed && !isMobileOpen && "absolute -top-1 -right-1 min-w-5 h-5 text-[10px] px-1.5"
                     )}
                   >
                     {item.badge > 99 ? "99+" : item.badge}
                   </span>
                 )}
                 {active && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary-foreground rounded-r-full animate-pulse" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-foreground rounded-r-full shadow-glow" />
                 )}
               </button>
             );
@@ -190,13 +206,13 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
         </nav>
 
         {/* Bottom Section */}
-        <div className="p-3 space-y-1">
-          <Separator className="mb-3 bg-border/50" />
+        <div className="p-3 space-y-1.5">
+          <Separator className="mb-4 bg-gradient-to-r from-transparent via-border/60 to-transparent" />
           
           {(!collapsed || isMobileOpen) && (
-            <div className="px-2 pb-2">
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                Tizim
+            <div className="px-2 pb-3">
+              <span className="text-[10px] font-bold text-accent/70 uppercase tracking-[0.2em]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                Qo'shimcha
               </span>
             </div>
           )}
@@ -208,26 +224,35 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
               <button
                 key={item.id}
                 onClick={() => handleNavigation(item.path)}
+                style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
                 className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group",
-                  "hover:scale-[1.02] hover:translate-x-1 active:scale-[0.98]",
+                  "w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl transition-all duration-300 group",
+                  "hover:scale-[1.01] active:scale-[0.99]",
                   active
-                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:shadow-sm"
+                    ? "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25"
+                    : "text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-muted/60 hover:to-muted/30"
                 )}
               >
                 <div
                   className={cn(
-                    "w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300",
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
                     active
-                      ? "bg-primary-foreground/20"
-                      : "bg-muted/50 group-hover:bg-primary/20 group-hover:text-primary group-hover:scale-110 group-hover:rotate-3"
+                      ? "bg-primary-foreground/20 shadow-inner"
+                      : "bg-gradient-to-br from-muted/80 to-muted/40 group-hover:from-primary/20 group-hover:to-accent/10 group-hover:scale-110"
                   )}
                 >
-                  <Icon className="w-[18px] h-[18px] transition-transform duration-300" />
+                  <Icon className={cn(
+                    "w-5 h-5 transition-all duration-300",
+                    !active && "group-hover:text-primary"
+                  )} />
                 </div>
                 {(!collapsed || isMobileOpen) && (
-                  <span className="font-medium text-sm transition-all duration-300 group-hover:translate-x-0.5">{item.label}</span>
+                  <span className={cn(
+                    "font-semibold text-[13px] tracking-wide transition-all duration-300",
+                    active ? "text-primary-foreground" : "group-hover:translate-x-0.5"
+                  )}>
+                    {item.label}
+                  </span>
                 )}
               </button>
             );
@@ -236,27 +261,27 @@ export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onColl
         </div>
 
         {/* User Profile Card */}
-        <div className="p-3 border-t border-border/50">
+        <div className="p-3 border-t border-border/40">
           <div
             className={cn(
-              "flex items-center gap-3 p-2 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all duration-300 group cursor-pointer",
-              collapsed && !isMobileOpen && "justify-center"
+              "flex items-center gap-3 p-3 rounded-2xl bg-gradient-to-r from-muted/40 to-muted/20 hover:from-muted/60 hover:to-muted/30 transition-all duration-300 group cursor-pointer",
+              collapsed && !isMobileOpen && "justify-center p-2"
             )}
           >
             <div className="relative">
-              <Avatar className="w-10 h-10 ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300">
+              <Avatar className="w-11 h-11 ring-2 ring-primary/30 group-hover:ring-primary/50 transition-all duration-300 group-hover:scale-105">
                 <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userEmail}`} />
-                <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm">
+                <AvatarFallback className="bg-gradient-to-br from-primary/20 to-accent/20 text-primary font-bold text-sm">
                   {userInitials}
                 </AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success rounded-full border-2 border-card" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-success rounded-full border-2 border-card animate-pulse" />
             </div>
             
             {(!collapsed || isMobileOpen) && (
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-foreground truncate capitalize">{userName}</p>
-                <p className="text-xs text-muted-foreground truncate">{userEmail}</p>
+              <div className="flex-1 min-w-0" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+                <p className="text-sm font-bold text-foreground truncate capitalize tracking-wide">{userName}</p>
+                <p className="text-[11px] text-muted-foreground truncate font-medium">{userEmail}</p>
               </div>
             )}
 
