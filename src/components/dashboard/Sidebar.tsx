@@ -47,10 +47,11 @@ const bottomItems = [
 interface SidebarProps {
   isMobileOpen?: boolean;
   onMobileClose?: () => void;
+  collapsed?: boolean;
+  onCollapsedChange?: (collapsed: boolean) => void;
 }
 
-export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
-  const [collapsed, setCollapsed] = useState(false);
+export const Sidebar = ({ isMobileOpen, onMobileClose, collapsed = false, onCollapsedChange }: SidebarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, signOut } = useAuth();
@@ -288,7 +289,7 @@ export const Sidebar = ({ isMobileOpen, onMobileClose }: SidebarProps) => {
 
         {/* Collapse Button - Desktop Only */}
         <button
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => onCollapsedChange?.(!collapsed)}
           className="absolute -right-3 top-20 w-6 h-6 rounded-full bg-card border border-border shadow-sm items-center justify-center hover:bg-muted hover:scale-110 transition-all hidden lg:flex"
         >
           {collapsed ? (
