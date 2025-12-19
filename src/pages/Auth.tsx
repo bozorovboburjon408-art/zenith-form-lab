@@ -4,7 +4,7 @@ import { Eye, EyeOff, Zap, ArrowRight, Shield, BarChart3, Users } from "lucide-r
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
 
@@ -13,7 +13,7 @@ const passwordSchema = z.string().min(6, "Parol kamida 6 ta belgidan iborat bo'l
 
 const Auth = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const { signIn, signUp, isLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" });
@@ -45,41 +45,17 @@ const Auth = () => {
       return;
     }
 
-    setIsLoading(true);
-
     try {
       if (isLogin) {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
-        });
-        if (error) {
-          toast({ title: "Xatolik", description: error.message.includes("Invalid") ? "Email yoki parol noto'g'ri" : error.message, variant: "destructive" });
-          return;
-        }
-        if (data.user) {
-          toast({ title: "Xush kelibsiz!", description: "Muvaffaqiyatli kirdingiz" });
-          navigate("/");
-        }
+        await signIn(formData.email, formData.password);
+        toast({ title: "Xush kelibsiz!", description: "Muvaffaqiyatli kirdingiz" });
       } else {
-        const { data, error } = await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-          options: { emailRedirectTo: `${window.location.origin}/` },
-        });
-        if (error) {
-          toast({ title: "Xatolik", description: error.message.includes("already") ? "Bu email allaqachon ro'yxatdan o'tgan" : error.message, variant: "destructive" });
-          return;
-        }
-        if (data.user) {
-          toast({ title: "Muvaffaqiyatli!", description: "Hisob yaratildi" });
-          navigate("/");
-        }
+        await signUp(formData.email, formData.password);
+        toast({ title: "Muvaffaqiyatli!", description: "Hisob yaratildi" });
       }
+      navigate("/");
     } catch {
       toast({ title: "Xatolik", description: "Kutilmagan xatolik yuz berdi", variant: "destructive" });
-    } finally {
-      setIsLoading(false);
     }
   };
 
