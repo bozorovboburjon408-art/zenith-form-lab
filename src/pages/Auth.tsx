@@ -161,44 +161,64 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
+      {/* Background with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
+      
+      {/* Animated circles */}
+      <div className="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse-slow" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+
+      <div className="w-full max-w-md relative z-10 animate-slide-up">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary mb-3">
-            <Zap className="w-6 h-6 text-primary-foreground" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/25 mb-4 animate-float">
+            <Zap className="w-8 h-8 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-semibold text-foreground">AdminPro</h1>
+          <h1 className="text-3xl font-bold text-gradient mb-2">AdminPro</h1>
+          <p className="text-muted-foreground">Tizimga xush kelibsiz</p>
         </div>
 
         {/* Auth Card */}
-        <Card className="border-border/50">
+        <Card className="glass-card shadow-xl shadow-primary/5 border-border/30">
           <Tabs defaultValue="login" className="w-full">
             <CardHeader className="pb-4">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Kirish</TabsTrigger>
-                <TabsTrigger value="signup">Ro'yxatdan o'tish</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1">
+                <TabsTrigger 
+                  value="login" 
+                  className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm transition-all"
+                >
+                  Kirish
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="signup"
+                  className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm transition-all"
+                >
+                  Ro'yxatdan o'tish
+                </TabsTrigger>
               </TabsList>
             </CardHeader>
 
             <CardContent className="pt-0">
               {/* Login Tab */}
-              <TabsContent value="login" className="space-y-4 mt-0">
-                <form onSubmit={handleLogin} className="space-y-4">
+              <TabsContent value="login" className="space-y-5 mt-0">
+                <form onSubmit={handleLogin} className="space-y-5">
                   <div className="space-y-2">
-                    <Label htmlFor="login-email">Email</Label>
+                    <Label htmlFor="login-email" className="text-sm font-medium">Email</Label>
                     <Input
                       id="login-email"
                       type="email"
                       placeholder="email@example.com"
                       value={loginData.email}
                       onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                      className="h-12 bg-background/50 border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                       required
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="login-password">Parol</Label>
+                    <Label htmlFor="login-password" className="text-sm font-medium">Parol</Label>
                     <div className="relative">
                       <Input
                         id="login-password"
@@ -206,14 +226,14 @@ const Auth = () => {
                         placeholder="••••••••"
                         value={loginData.password}
                         onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                        className="pr-10"
+                        className="h-12 pr-12 bg-background/50 border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                         required
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted/50"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? <EyeOff className="w-4 h-4 text-muted-foreground" /> : <Eye className="w-4 h-4 text-muted-foreground" />}
@@ -221,29 +241,39 @@ const Auth = () => {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Yuklanmoqda..." : "Kirish"}
+                  <Button 
+                    type="submit" 
+                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all shadow-lg shadow-primary/25" 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                        Yuklanmoqda...
+                      </span>
+                    ) : "Kirish"}
                   </Button>
                 </form>
               </TabsContent>
 
               {/* Signup Tab */}
-              <TabsContent value="signup" className="space-y-4 mt-0">
-                <form onSubmit={handleSignup} className="space-y-4">
+              <TabsContent value="signup" className="space-y-5 mt-0">
+                <form onSubmit={handleSignup} className="space-y-5">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
+                    <Label htmlFor="signup-email" className="text-sm font-medium">Email</Label>
                     <Input
                       id="signup-email"
                       type="email"
                       placeholder="email@example.com"
                       value={signupData.email}
                       onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
+                      className="h-12 bg-background/50 border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                       required
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">Parol</Label>
+                    <Label htmlFor="signup-password" className="text-sm font-medium">Parol</Label>
                     <div className="relative">
                       <Input
                         id="signup-password"
@@ -251,14 +281,14 @@ const Auth = () => {
                         placeholder="••••••••"
                         value={signupData.password}
                         onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
-                        className="pr-10"
+                        className="h-12 pr-12 bg-background/50 border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                         required
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-muted/50"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? <EyeOff className="w-4 h-4 text-muted-foreground" /> : <Eye className="w-4 h-4 text-muted-foreground" />}
@@ -267,25 +297,40 @@ const Auth = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="signup-confirm">Parolni tasdiqlash</Label>
+                    <Label htmlFor="signup-confirm" className="text-sm font-medium">Parolni tasdiqlash</Label>
                     <Input
                       id="signup-confirm"
                       type="password"
                       placeholder="••••••••"
                       value={signupData.confirmPassword}
                       onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
+                      className="h-12 bg-background/50 border-border/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                       required
                     />
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Yuklanmoqda..." : "Ro'yxatdan o'tish"}
+                  <Button 
+                    type="submit" 
+                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all shadow-lg shadow-primary/25" 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                        Yuklanmoqda...
+                      </span>
+                    ) : "Ro'yxatdan o'tish"}
                   </Button>
                 </form>
               </TabsContent>
             </CardContent>
           </Tabs>
         </Card>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-muted-foreground mt-6">
+          © 2024 AdminPro. Barcha huquqlar himoyalangan.
+        </p>
       </div>
     </div>
   );
