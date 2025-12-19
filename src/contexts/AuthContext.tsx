@@ -1,19 +1,24 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { User, Session } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+import { createContext, useContext, useState } from "react";
+
+interface User {
+  id: string;
+  email: string;
+}
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
   isLoading: boolean;
-  signOut: () => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
+  signOut: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  session: null,
-  isLoading: true,
-  signOut: async () => {},
+  isLoading: false,
+  signIn: async () => {},
+  signUp: async () => {},
+  signOut: () => {},
 });
 
 export const useAuth = () => {
@@ -26,37 +31,43 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // Set up auth state listener FIRST
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+  // TODO: O'zingizning backend API ga bog'lang
+  const signIn = async (email: string, password: string) => {
+    setIsLoading(true);
+    try {
+      // O'zingizning API endpointingizga so'rov yuboring
+      // const response = await fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+      // const data = await response.json();
+      // setUser(data.user);
+      console.log("SignIn:", email, password);
+      setUser({ id: "1", email });
+    } finally {
       setIsLoading(false);
-    });
+    }
+  };
 
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+  const signUp = async (email: string, password: string) => {
+    setIsLoading(true);
+    try {
+      // O'zingizning API endpointingizga so'rov yuboring
+      // const response = await fetch('/api/register', { method: 'POST', body: JSON.stringify({ email, password }) });
+      // const data = await response.json();
+      // setUser(data.user);
+      console.log("SignUp:", email, password);
+      setUser({ id: "1", email });
+    } finally {
       setIsLoading(false);
-    });
+    }
+  };
 
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const signOut = async () => {
-    await supabase.auth.signOut();
+  const signOut = () => {
     setUser(null);
-    setSession(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, isLoading, signOut }}>
+    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
