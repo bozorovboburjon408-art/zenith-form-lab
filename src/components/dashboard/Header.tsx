@@ -1,4 +1,5 @@
-import { Search, Bell, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Search, Bell, User, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,8 +13,25 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "@/hooks/use-toast";
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: "Chiqildi",
+      description: "Hisobdan muvaffaqiyatli chiqdingiz",
+    });
+    navigate("/auth");
+  };
+
+  const userEmail = user?.email || "admin@example.com";
+  const userInitials = userEmail.slice(0, 2).toUpperCase();
+
   return (
     <header className="h-16 border-b border-border bg-card/50 backdrop-blur-xl flex items-center justify-between px-6 sticky top-0 z-40">
       {/* Search */}
@@ -63,25 +81,31 @@ export const Header = () => {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="gap-3 px-2">
               <Avatar className="w-8 h-8">
-                <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" />
-                <AvatarFallback>AD</AvatarFallback>
+                <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userEmail}`} />
+                <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="text-left hidden md:block">
-                <p className="text-sm font-medium">Admin User</p>
-                <p className="text-xs text-muted-foreground">admin@example.com</p>
+                <p className="text-sm font-medium">{userEmail.split("@")[0]}</p>
+                <p className="text-xs text-muted-foreground">{userEmail}</p>
               </div>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>Mening hisobim</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/settings")}>
               <User className="w-4 h-4 mr-2" />
               Profil
             </DropdownMenuItem>
-            <DropdownMenuItem>Sozlamalar</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/settings")}>
+              <Settings className="w-4 h-4 mr-2" />
+              Sozlamalar
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">Chiqish</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
+              <LogOut className="w-4 h-4 mr-2" />
+              Chiqish
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
