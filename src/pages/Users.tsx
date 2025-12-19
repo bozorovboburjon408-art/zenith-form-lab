@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Search, MoreHorizontal, UserPlus } from "lucide-react";
+import { Pencil, Trash2, Search, MoreHorizontal, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,8 +46,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 
 interface User {
   id: string;
@@ -167,121 +166,118 @@ const Users = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-
-      <div className="ml-64 transition-all duration-300">
-        <Header />
-
-        <main className="p-6 space-y-6">
-          {/* Page Title */}
-          <div className="flex items-center justify-between animate-fade-in">
-            <div>
-              <h1 className="text-3xl font-bold text-gradient">Foydalanuvchilar</h1>
-              <p className="text-muted-foreground mt-1">
-                Foydalanuvchilarni boshqaring va nazorat qiling
-              </p>
-            </div>
-            <Button onClick={() => setIsAddDialogOpen(true)} className="gap-2">
-              <UserPlus className="w-4 h-4" />
-              Yangi qo'shish
-            </Button>
-          </div>
-
-          {/* Users Table Card */}
-          <Card className="glass-card">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Foydalanuvchilar ro'yxati</CardTitle>
-                  <CardDescription>Jami {users.length} ta foydalanuvchi</CardDescription>
-                </div>
-                <div className="relative w-72">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Qidirish..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 input-glow"
-                  />
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-border/50 hover:bg-transparent">
-                    <TableHead className="text-muted-foreground">Foydalanuvchi</TableHead>
-                    <TableHead className="text-muted-foreground">Rol</TableHead>
-                    <TableHead className="text-muted-foreground">Holat</TableHead>
-                    <TableHead className="text-muted-foreground">Qo'shilgan sana</TableHead>
-                    <TableHead className="text-muted-foreground text-right">Amallar</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredUsers.map((user) => (
-                    <TableRow key={user.id} className="table-row-hover border-border/50">
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar className="w-10 h-10">
-                            <AvatarImage
-                              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`}
-                            />
-                            <AvatarFallback>{user.name.slice(0, 2)}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium">{user.name}</p>
-                            <p className="text-sm text-muted-foreground">{user.email}</p>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className={roleStyles[user.role]}>
-                          {roleLabels[user.role]}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className={statusStyles[user.status]}>
-                          {statusLabels[user.status]}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">{user.createdAt}</TableCell>
-                      <TableCell className="text-right">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <MoreHorizontal className="w-4 h-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => openEditDialog(user)}>
-                              <Pencil className="w-4 h-4 mr-2" />
-                              Tahrirlash
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onClick={() => openDeleteDialog(user)}
-                              className="text-destructive focus:text-destructive"
-                            >
-                              <Trash2 className="w-4 h-4 mr-2" />
-                              O'chirish
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-
-              {filteredUsers.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">Foydalanuvchi topilmadi</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </main>
+    <DashboardLayout>
+      {/* Page Title */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gradient">Foydalanuvchilar</h1>
+          <p className="text-muted-foreground mt-1">
+            Foydalanuvchilarni boshqaring va nazorat qiling
+          </p>
+        </div>
+        <Button onClick={() => setIsAddDialogOpen(true)} className="gap-2 w-full sm:w-auto">
+          <UserPlus className="w-4 h-4" />
+          Yangi qo'shish
+        </Button>
       </div>
+
+      {/* Users Table Card */}
+      <Card className="glass-card">
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <CardTitle>Foydalanuvchilar ro'yxati</CardTitle>
+              <CardDescription>Jami {users.length} ta foydalanuvchi</CardDescription>
+            </div>
+            <div className="relative w-full sm:w-72">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Qidirish..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 input-glow"
+              />
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="border-border/50 hover:bg-transparent">
+                <TableHead className="text-muted-foreground">Foydalanuvchi</TableHead>
+                <TableHead className="text-muted-foreground hidden md:table-cell">Rol</TableHead>
+                <TableHead className="text-muted-foreground hidden sm:table-cell">Holat</TableHead>
+                <TableHead className="text-muted-foreground hidden lg:table-cell">Qo'shilgan sana</TableHead>
+                <TableHead className="text-muted-foreground text-right">Amallar</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredUsers.map((user) => (
+                <TableRow key={user.id} className="table-row-hover border-border/50">
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-10 h-10">
+                        <AvatarImage
+                          src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`}
+                        />
+                        <AvatarFallback>{user.name.slice(0, 2)}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-medium">{user.name}</p>
+                        <p className="text-sm text-muted-foreground">{user.email}</p>
+                        <div className="flex gap-2 mt-1 md:hidden">
+                          <Badge variant="outline" className={roleStyles[user.role]}>
+                            {roleLabels[user.role]}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <Badge variant="outline" className={roleStyles[user.role]}>
+                      {roleLabels[user.role]}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    <Badge variant="outline" className={statusStyles[user.status]}>
+                      {statusLabels[user.status]}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground hidden lg:table-cell">{user.createdAt}</TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => openEditDialog(user)}>
+                          <Pencil className="w-4 h-4 mr-2" />
+                          Tahrirlash
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => openDeleteDialog(user)}
+                          className="text-destructive focus:text-destructive"
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          O'chirish
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+          {filteredUsers.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Foydalanuvchi topilmadi</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Add User Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -460,7 +456,7 @@ const Users = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </DashboardLayout>
   );
 };
 

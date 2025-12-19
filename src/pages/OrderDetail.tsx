@@ -11,8 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Header } from "@/components/dashboard/Header";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { ordersData, Order } from "./Orders";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -41,19 +40,13 @@ const OrderDetail = () => {
 
   if (!order) {
     return (
-      <div className="min-h-screen bg-background">
-        <Sidebar />
-        <div className="ml-64 transition-all duration-300">
-          <Header />
-          <main className="p-6">
-            <div className="text-center py-20">
-              <h2 className="text-2xl font-bold mb-2">Buyurtma topilmadi</h2>
-              <p className="text-muted-foreground mb-4">ID: {id}</p>
-              <Button onClick={() => navigate("/orders")}>Orqaga qaytish</Button>
-            </div>
-          </main>
+      <DashboardLayout>
+        <div className="text-center py-20">
+          <h2 className="text-2xl font-bold mb-2">Buyurtma topilmadi</h2>
+          <p className="text-muted-foreground mb-4">ID: {id}</p>
+          <Button onClick={() => navigate("/orders")}>Orqaga qaytish</Button>
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
@@ -66,30 +59,24 @@ const OrderDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-
-      <div className="ml-64 transition-all duration-300">
-        <Header />
-
-        <main className="p-6 space-y-6">
-          {/* Back Button & Title */}
-          <div className="flex items-center justify-between animate-fade-in">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => navigate("/orders")}>
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <div>
-                <h1 className="text-3xl font-bold">
-                  Buyurtma <span className="text-gradient">{order.id}</span>
-                </h1>
-                <p className="text-muted-foreground mt-1">{order.createdAt} sanasida yaratilgan</p>
-              </div>
-            </div>
-            <Badge variant="outline" className={`text-base px-4 py-2 ${statusStyles[status]}`}>
-              {statusLabels[status]}
-            </Badge>
+    <DashboardLayout>
+      {/* Back Button & Title */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" onClick={() => navigate("/orders")}>
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold">
+              Buyurtma <span className="text-gradient">{order.id}</span>
+            </h1>
+            <p className="text-muted-foreground mt-1">{order.createdAt} sanasida yaratilgan</p>
           </div>
+        </div>
+        <Badge variant="outline" className={`text-base px-4 py-2 ${statusStyles[status]}`}>
+          {statusLabels[status]}
+        </Badge>
+      </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Order Details */}
@@ -225,9 +212,7 @@ const OrderDetail = () => {
               </Card>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
